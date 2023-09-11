@@ -14,6 +14,7 @@ export default function Home() {
   const router = useRouter();
   const { page, search } = router.query;
   const [keyword, setKeyword] = useState<string>(search as string);
+  console.log("🚀 ~ file: index.tsx:17 ~ Home ~ keyword:", keyword);
 
   useEffect(() => {
     if (search) {
@@ -23,6 +24,11 @@ export default function Home() {
 
   const { data, loading, refetch } = useQuery(GET_CHARACTERS, {
     variables: { page: page, value: search },
+    context: {
+      fetchOptions: {
+        next: { revalidate: 60 },
+      },
+    },
   });
 
   const [results, setResults] = useState(data?.characters.characters || []);
@@ -118,9 +124,7 @@ export default function Home() {
           classes={{ root: classes.inputRoot, inputRoot: classes.input }}
         />
 
-        <Button disabled={!keyword?.length} type="submit">
-          Search
-        </Button>
+        <Button type="submit">Search</Button>
       </form>
       <Listing listingData={data?.characters.characters} />
 

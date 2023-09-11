@@ -12,6 +12,11 @@ export default function Character() {
   const { characterId } = router.query;
   const { data, loading } = useQuery(GET_CHARACTER, {
     variables: { id: characterId },
+    context: {
+      fetchOptions: {
+        next: { revalidate: 60 },
+      },
+    },
   });
 
   if (loading) return <Loader />;
