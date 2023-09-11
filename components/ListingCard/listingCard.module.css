@@ -29,7 +29,9 @@
 }
 
 .characterImage {
-  @apply rounded-full;
+  @apply rounded-full
+  object-cover
+  h-[35px];
 }
 
 .name {

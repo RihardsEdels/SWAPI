@@ -18,6 +18,7 @@ const typeDefs = gql`
     name: String
     created:String
     birthYear:String
+    gender:String
     hairColor:String
     height:String
     homeworld: Homeworld
@@ -27,6 +28,8 @@ const typeDefs = gql`
 
   type Homeworld {
     name:String
+    population:String
+    orbitalPeriod:String
   }
 
   type Films {
@@ -39,6 +42,7 @@ const typeDefs = gql`
 
   type Species{
     name:String
+    classification:String
   }
 
   

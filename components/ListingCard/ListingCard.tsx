@@ -38,7 +38,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ characterData }) => {
               width={35}
               height={35}
               alt=""
-              src="/sw.png"
+              src={`/characters/${id}.jpg` || "/sw.png"}
             />
             <h2 className={classes.name}>{name}</h2>
           </div>{" "}

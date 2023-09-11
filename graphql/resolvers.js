@@ -39,21 +39,25 @@ const resolvers = {
             try {
                 const response = await fetch(`${process.env.URL_API}/${id}/`);
                 const data = await response.json()
+                console.log("🚀 ~ file: resolvers.js:42 ~ character: ~ data:", data)
 
                 const homeworld = await (await fetch(data.homeworld)).json();
                 const species = data.species.length && await (await fetch(data.species[0])).json();
 
                 return {
                     name: data.name,
-                    birthYear: data.birthYear,
-                    hairColor: data.hairColor,
+                    birthYear: data.birth_year,
+                    hairColor: data.hair_color,
                     height: data.height,
                     gender: data.gender,
                     homeworld: {
-                        name: homeworld.name
+                        name: homeworld.name,
+                        population: homeworld.population,
+                        orbitalPeriod: homeworld.orbital_period
                     },
                     species: {
-                        name: species?.name || "unknown"
+                        name: species?.name || "unknown",
+                        classification: species.classification
                     }
 
                 }
