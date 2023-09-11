@@ -4,37 +4,67 @@ const resolvers = {
             try {
                 const response = await fetch(`${process.env.URL_API}/?page=${page}&search=${value}`);
                 const data = await response.json();
-                console.log("🚀 ~ file: resolvers.js:7 ~ users: ~ data:", data);
 
                 return {
                     total: data.count,
                     next: data.next,
                     previous: data.previous,
-                    characters: data.results.map((u) => {
+                    characters: data.results.map(async (c) => {
+                        const homeworld = await (await fetch(c.homeworld)).json();
+                        const species = c.species.length && await (await fetch(c.species[0])).json();
+
                         return {
-                            name: u.name,
-                            url: u.url
+                            id: c.url.slice(-2, -1),
+                            name: c.name,
+                            birthYear: c.birth_year,
+                            hairColor: c.hair_color,
+                            height: c.height,
+                            gender: c.gender,
+                            homeworld: {
+                                name: homeworld.name
+                            },
+                            created: c.created,
+                            species: {
+                                name: species?.name || "unknown"
+                            }
                         };
                     }),
                 };
             } catch (error) {
-                throw new Error("Something went wrong");
+                throw new Error("Something went wrong", error);
             }
         },
-        searchCharacter: async (_, { value }) => {
-            try {
-                const response = await fetch(`${process.env.URL_API}/?search=${value}`);
-                const data = await response.json();
+        character: async (_, { id }) => {
 
-                return data.results.map((u) => {
-                    return {
-                        name: u.name,
-                    };
-                });
+            try {
+                const response = await fetch(`${process.env.URL_API}/${id}/`);
+                const data = await response.json()
+
+                const homeworld = await (await fetch(data.homeworld)).json();
+                const species = data.species.length && await (await fetch(data.species[0])).json();
+
+                return {
+                    name: data.name,
+                    birthYear: data.birthYear,
+                    hairColor: data.hairColor,
+                    height: data.height,
+                    gender: data.gender,
+                    homeworld: {
+                        name: homeworld.name
+                    },
+                    species: {
+                        name: species?.name || "unknown"
+                    }
+
+                }
+
             } catch (error) {
-                throw new Error("Something went wrong");
+                throw new Error("Something went wrong", error);
             }
-        },
+
+
+
+        }
     },
 };
 

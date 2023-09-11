@@ -1,0 +1,20 @@
+.root {
+  @apply relative
+    max-w-min;
+}
+
+.inputRoot {
+  @apply outline-none
+    px-3
+    py-1
+    border-2
+    text-gray-dark
+    border-gray-border
+    focus:border-gray-dark;
+}
+
+.icon {
+  @apply absolute
+    right-2
+    top-2;
+}

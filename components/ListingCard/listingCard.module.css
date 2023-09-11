@@ -1,0 +1,52 @@
+.root {
+  @apply w-full
+    bg-gray-dark
+    text-gray-light
+     rounded-md;
+}
+
+.characterInfo {
+  @apply p-3
+    lg:p-5;
+}
+
+.cardDate {
+  @apply text-green
+    text-xs;
+}
+
+.nameContainer {
+  @apply grid
+    grid-flow-col
+    justify-start
+    items-center
+    gap-3
+    border-b
+    border-gray-border
+    pb-2
+    pt-1
+    mb-2;
+}
+
+.characterImage {
+  @apply rounded-full;
+}
+
+.name {
+  @apply text-lg
+    font-semibold
+    hover:underline;
+}
+
+.statsContainer {
+  @apply hidden
+    lg:block
+    text-sm
+    py-2;
+}
+
+.statsItem {
+  @apply grid
+    grid-flow-col
+    grid-cols-2;
+}

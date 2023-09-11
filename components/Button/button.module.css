@@ -1,0 +1,9 @@
+.root {
+  @apply py-[2px]
+    bg-green
+    hover:bg-[#0d8567]
+    active:text-gray-light
+    px-2
+    text-gray-dark
+    rounded-sm;
+}

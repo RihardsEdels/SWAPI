@@ -1,0 +1,38 @@
+.root {
+  @apply py-5
+    grid
+    gap-3;
+}
+
+.inputRoot {
+  @apply relative
+    max-w-full
+    lg:max-w-max
+    border-gray-dark;
+}
+
+.input {
+  @apply outline-none
+  px-3
+  py-1
+  border-2
+  text-gray-dark
+  border-gray-border
+  focus:border-gray-dark
+  w-full
+  rounded-md;
+}
+
+.characterGrid {
+  @apply grid
+    gap-2
+    md:grid-cols-2
+    md:gap-3
+    lg:grid-cols-3
+    lg:gap-4;
+}
+
+.noResults {
+  @apply text-gray-dark
+    self-center;
+}

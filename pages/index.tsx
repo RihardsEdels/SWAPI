@@ -1,17 +1,29 @@
+import Input from "@/components/Input/Input";
+import Listing from "@/components/Listing/Listing";
 import { useQuery } from "@apollo/client";
+import { mdiClose } from "@mdi/js";
 import { gql } from "apollo-server-core";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 
-export default function Home({ params }) {
+import classes from "./page.module.css";
+import Button from "@/components/Button/Button";
+import Loader from "@/components/Loader/Loader";
+
+export default function Home() {
   const query = gql`
     query getPeople($page: String, $value: String) {
       characters(page: $page, value: $value) {
         total
         characters {
+          id
           name
-          url
+          height
+          birthYear
+          hairColor
+          homeworld {
+            name
+          }
         }
       }
     }
@@ -19,12 +31,17 @@ export default function Home({ params }) {
 
   const router = useRouter();
   const { page, search } = router.query;
-  const [keyword, setKeyword] = useState(search);
+  const [keyword, setKeyword] = useState<string>(search as string);
+
+  useEffect(() => {
+    if (search) {
+      setKeyword(search as string);
+    }
+  }, [search]);
 
   const { data, loading, refetch } = useQuery(query, {
     variables: { page: page, value: search },
   });
-  console.log("🚀 ~ file: index.tsx:26 ~ Home ~ data:", data);
 
   const [results, setResults] = useState(data?.characters.characters || []);
   const [originalResults, setOriginalResults] = useState(
@@ -38,10 +55,11 @@ export default function Home({ params }) {
     }
   }, [data]);
 
-  if (loading) return "LOADING";
+  if (loading) return <Loader />;
 
-  const handleSearch = (e) => {
-    setKeyword(e.target.value);
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    const element = e.target as HTMLButtonElement;
+    setKeyword(element.value);
   };
 
   const pagination = Array.from(
@@ -59,22 +77,25 @@ export default function Home({ params }) {
   );
 
   return (
-    <main>
-      <form>
-        <input
-          name="search"
+    <main className="container mx-auto px-5">
+      <form className={classes.form}>
+        <Input
+          onChange={handleSearch}
           value={keyword}
-          onChange={(e) => handleSearch(e)}
-          placeholder="Search"
-        ></input>
-        <button type="submit">submit</button>
+          placeholder={"Search name or homeworld"}
+          icon={keyword && mdiClose}
+          name="search"
+          action={() => setKeyword("")}
+          classes={{ root: classes.inputRoot, inputRoot: classes.input }}
+        />
+
+        <Button disabled={!keyword?.length} type="submit">
+          Search
+        </Button>
       </form>
-      {results.map((person) => (
-        <Link href={`${person.name}`} key={person.id}>
-          {person.name}
-        </Link>
-      ))}
-      <div>{pagination}</div>
+      <Listing listingData={data?.characters.characters} />
+
+      <div className="flex flex-wrap gap-1 text-lg">{pagination}</div>
     </main>
   );
 }

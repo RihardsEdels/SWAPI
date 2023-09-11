@@ -1,0 +1,26 @@
+.inputRoot {
+  @apply relative
+      max-w-full
+      lg:max-w-max
+      border-gray-dark;
+}
+
+.input {
+  @apply outline-none
+    px-3
+    py-1
+    border-2
+    text-gray-dark
+    border-gray-border
+    focus:border-gray-dark
+    w-full
+    rounded-md;
+}
+
+.form {
+  @apply grid
+    grid-flow-col
+    gap-2
+    justify-start
+    mt-5;
+}

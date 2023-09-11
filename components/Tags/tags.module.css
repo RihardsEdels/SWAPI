@@ -1,0 +1,16 @@
+.root {
+  @apply flex
+    gap-2
+    flex-wrap;
+}
+
+.tag {
+  @apply border
+    border-green
+    py-1
+    px-2
+    rounded-full
+    text-green
+    font-semibold
+    text-xs;
+}
