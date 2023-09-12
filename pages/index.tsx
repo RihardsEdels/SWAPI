@@ -23,11 +23,6 @@ export default function Home() {
 
   const { data, loading, refetch } = useQuery(GET_CHARACTERS, {
     variables: { page: page, value: search },
-    context: {
-      fetchOptions: {
-        next: { revalidate: 60 },
-      },
-    },
   });
 
   const [results, setResults] = useState(data?.characters.characters || []);
