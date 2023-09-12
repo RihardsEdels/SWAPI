@@ -1,18 +1,13 @@
 const allowCors = (fn) => async (req, res) => {
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('origin', 'https://nextjs-graphql-server-client.vercel.app')
-    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*')
-    // another common pattern
-    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
-    )
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+    res.setHeader('Access-Control-Allow-Headers', '*');
     if (req.method === 'OPTIONS') {
-        res.status(200).end()
-        return
+        res.status(200).end();
+        return;
     }
-    await fn(req, res)
+    await fn(req, res);
 }
 
-export default allowCors
+export default allowCors;

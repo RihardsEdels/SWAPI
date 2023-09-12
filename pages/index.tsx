@@ -14,7 +14,6 @@ export default function Home() {
   const router = useRouter();
   const { page, search } = router.query;
   const [keyword, setKeyword] = useState<string>(search as string);
-  console.log("🚀 ~ file: index.tsx:17 ~ Home ~ keyword:", keyword);
 
   useEffect(() => {
     if (search) {
