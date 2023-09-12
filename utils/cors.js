@@ -1,7 +1,8 @@
 const allowCors = (fn) => async (req, res) => {
     res.setHeader('Access-Control-Allow-Credentials', true)
-    res.setHeader('Access-Control-Allow-Origin', 'https://swapi-lovat.vercel.app'); // Adjust the origin here
-    // another common pattern
+    res.setHeader('origin', 'https://swapi-lovat.vercel.app')
+    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*')
+
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
     res.setHeader(
         'Access-Control-Allow-Headers',
